@@ -1,4 +1,5 @@
 <?php
+
 ini_set('display_errors', 'on');
 ini_set('html_errors', 'on');
 // ini_set('display_errors', 'off');
@@ -7,8 +8,8 @@ ini_set('error_reporting', E_ALL);
 
 date_default_timezone_set('Africa/Algiers');
 
-define('__RACINE', '/hotelo/');
-define('NOM_DE_SITE', '/hotelo/');
+define('__ROOT', '/scandiWebBE/');
+define('NOM_DE_SITE', '/scandiWebBE/');
 define('__PATH', dirname(__DIR__) . '/');
 define('__HOME', 'localhost');
 
