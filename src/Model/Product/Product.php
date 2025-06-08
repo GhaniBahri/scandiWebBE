@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Model\Product;
 
-// use Price;
-// use Category;
-// use Attribute;
+use App\Model\Category;
+use App\Model\Attribute\Attribute;
+use App\Model\Price\Price;
 
-class Product
+abstract class Product
 {
     protected string $id;
     protected string $name;
@@ -16,8 +16,8 @@ class Product
     protected array $gallery;
     protected string $description;
     protected string $brand;
-    protected array $prices;
-    protected array $attributes;
+    protected array $prices = [];
+    protected array $attributes = [];
     protected Category $category;
 
     public function __construct(
@@ -42,18 +42,22 @@ class Product
         $this->category = $category;
     }
 
-    public function getId(): string
-    {
-        return $this->id;
-    }
-    public function getCategory(): Category
-    {
-        return $this->category;
-    }
+    // Add these getters for all properties
+    public function getId(): string { return $this->id; }
+    public function getName(): string { return $this->name; }
+    public function getInStock(): bool { return $this->inStock; }
+    public function getGallery(): array { return $this->gallery; }
+    public function getDescription(): string { return $this->description; }
+    public function getBrand(): string { return $this->brand; }
+    public function getPrices(): array { return $this->prices; }
+    public function getAttributes(): array { return $this->attributes; }
+    public function getCategory(): Category { return $this->category; }
+
     public function addAttribute(Attribute $attribute): void
     {
         $this->attributes[] = $attribute;
     }
+    
     public function addPrice(Price $price): void
     {
         $this->prices[] = $price;
