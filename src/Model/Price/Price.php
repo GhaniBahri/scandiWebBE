@@ -2,22 +2,33 @@
 
 declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Model\Price;
+
+use App\Model\Currency\Currency;
 
 class Price
 {
-    public float $amount;
-    public array $currency;
-
     public function __construct(
-        float $amount,
-        array $currency
-    ) {
-        $this->amount = $amount;
-        $this->currency = $currency;
-    }
-    public function addcurrency(array $currency): void
+        protected float $amount,
+        protected Currency $currency
+    ) {}
+
+    public function getAmount(): float
     {
-        $this->currency[] = $currency;
+        return $this->amount;
+    }
+
+    public function getCurrency(): Currency
+    {
+        return $this->currency;
+    }
+
+    public function getFormatted(): string
+    {
+        return sprintf(
+            '%s%.2f',
+            $this->currency->getSymbol(),
+            $this->amount
+        );
     }
 }

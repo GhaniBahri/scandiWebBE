@@ -1,23 +1,31 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Model\Attribute;
 
-class Attribute 
+use App\Model\AttributeOption;
+
+abstract class Attribute
 {
-    private string $id;
-    public string $name;
-    public string $type;
-
+    /** @var AttributeOption[] */
+    protected array $options = [];
+    
     public function __construct(
-        string $id,
-        string $name,
-        string $type
-    ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->type = $type;
+        protected string $id,
+        protected string $name
+    ) {}
+    
+    public function getId(): string { return $this->id; }
+    public function getName(): string { return $this->name; }
+    
+    public function addOption(AttributeOption $option): void
+    {
+        $this->options[] = $option;
     }
-
+    
+    /** @return AttributeOption[] */
+    public function getOptions(): array { return $this->options; }
+    
+    abstract public function getType(): string;
 }

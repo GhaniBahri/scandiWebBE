@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Model\Category;
+use App\Model\Category\Category;
 use App\Model\Attribute\Attribute;
 use App\Model\Price\Price;
 
@@ -42,7 +42,6 @@ abstract class Product
         $this->category = $category;
     }
 
-    // Add these getters for all properties
     public function getId(): string { return $this->id; }
     public function getName(): string { return $this->name; }
     public function getInStock(): bool { return $this->inStock; }
