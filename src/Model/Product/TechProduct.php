@@ -11,21 +11,12 @@ use InvalidArgumentException;
 
 class TechProduct extends Product
 {
-    /**
-     * Add a tech-specific attribute
-     * @throws InvalidArgumentException
-     */
     public function addAttribute(Attribute $attribute): void
     {
         $this->validateTechAttribute($attribute);
         parent::addAttribute($attribute);
     }
 
-    /**
-     * Set tech-specific attributes
-     * @param Attribute[] $attributes
-     * @throws InvalidArgumentException
-     */
     public function setAttributes(array $attributes): void
     {
         foreach ($attributes as $attribute) {
@@ -34,17 +25,17 @@ class TechProduct extends Product
         $this->attributes = $attributes;
     }
 
-    /**
-     * Validate that attribute is appropriate for tech products
-     * @throws InvalidArgumentException
-     */
     private function validateTechAttribute(Attribute $attribute): void
     {
-        if (!$attribute instanceof TextAttribute && 
+        if (!$attribute instanceof TextAttribute &&
             !$attribute instanceof SwatchAttribute) {
             throw new InvalidArgumentException(
                 'TechProduct only accepts TextAttribute or SwatchAttribute instances'
             );
         }
+    }
+    public function getProductType(): string
+    {
+        return 'tech';
     }
 }

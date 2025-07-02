@@ -10,10 +10,9 @@ class SwatchAttribute extends Attribute
     {
         return 'swatch';
     }
-    
-    // Swatch-specific methods
+
     public function getColorValues(): array
     {
-        return array_map(fn($opt) => $opt->getValue(), $this->getOptions());
+        return array_map(fn ($opt) => $opt->getValue(), $this->getOptions());
     }
 }

@@ -42,21 +42,49 @@ abstract class Product
         $this->category = $category;
     }
 
-    public function getId(): string { return $this->id; }
-    public function getName(): string { return $this->name; }
-    public function getInStock(): bool { return $this->inStock; }
-    public function getGallery(): array { return $this->gallery; }
-    public function getDescription(): string { return $this->description; }
-    public function getBrand(): string { return $this->brand; }
-    public function getPrices(): array { return $this->prices; }
-    public function getAttributes(): array { return $this->attributes; }
-    public function getCategory(): Category { return $this->category; }
+    public function getId(): string
+    {
+        return $this->id;
+    }
+    public function getName(): string
+    {
+        return $this->name;
+    }
+    public function getInStock(): bool
+    {
+        return $this->inStock;
+    }
+    public function getGallery(): array
+    {
+        return $this->gallery;
+    }
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+    public function getBrand(): string
+    {
+        return $this->brand;
+    }
+    public function getPrices(): array
+    {
+        return $this->prices;
+    }
+    public function getAttributes(): array
+    {
+        return $this->attributes;
+    }
+    public function getCategory(): Category
+    {
+        return $this->category;
+    }
+    abstract public function getProductType(): string;
 
     public function addAttribute(Attribute $attribute): void
     {
         $this->attributes[] = $attribute;
     }
-    
+
     public function addPrice(Price $price): void
     {
         $this->prices[] = $price;

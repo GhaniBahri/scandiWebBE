@@ -10,8 +10,7 @@ class TextAttribute extends Attribute
     {
         return 'text';
     }
-    
-    // Text-specific methods can be added here
+
     public function getTextOptions(): array
     {
         return $this->getOptions();

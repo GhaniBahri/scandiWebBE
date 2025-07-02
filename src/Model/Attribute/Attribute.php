@@ -8,24 +8,32 @@ use App\Model\AttributeOption;
 
 abstract class Attribute
 {
-    /** @var AttributeOption[] */
     protected array $options = [];
-    
+
     public function __construct(
         protected string $id,
         protected string $name
-    ) {}
-    
-    public function getId(): string { return $this->id; }
-    public function getName(): string { return $this->name; }
-    
+    ) {
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
     public function addOption(AttributeOption $option): void
     {
         $this->options[] = $option;
     }
-    
-    /** @return AttributeOption[] */
-    public function getOptions(): array { return $this->options; }
-    
+
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
+
     abstract public function getType(): string;
 }

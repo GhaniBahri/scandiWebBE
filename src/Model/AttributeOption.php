@@ -10,9 +10,19 @@ class AttributeOption
         protected string $id,
         protected string $displayValue,
         protected string $value
-    ) {}
-    
-    public function getId(): string { return $this->id; }
-    public function getDisplayValue(): string { return $this->displayValue; }
-    public function getValue(): string { return $this->value; }
+    ) {
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+    public function getDisplayValue(): string
+    {
+        return $this->displayValue;
+    }
+    public function getValue(): string
+    {
+        return $this->value;
+    }
 }

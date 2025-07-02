@@ -8,7 +8,8 @@ class Category
 {
     public function __construct(
         protected string $name
-    ) {}
+    ) {
+    }
 
     public function getName(): string
     {

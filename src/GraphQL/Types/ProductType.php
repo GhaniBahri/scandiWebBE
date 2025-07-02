@@ -1,16 +1,13 @@
 <?php
 
-declare (strict_types = 1);
-
 namespace App\GraphQL\Types;
 
-use App\Model\Product;
-use App\Model\Category;
-use App\GraphQL\Types\CategoryType;
-use App\GraphQL\Types\AttributeType;
-use App\GraphQL\Types\PriceType;
-use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\Type;
+use App\Model\Product\Product;
+use App\Model\Product\ClothingProduct;
+use App\Model\Product\TechProduct;
+use App\GraphQL\Types;
 
 class ProductType extends ObjectType
 {
@@ -18,65 +15,61 @@ class ProductType extends ObjectType
     {
         parent::__construct([
             'name' => 'Product',
-            'description' => 'A product in the store',
-            'fields' => fn(): array => [
-                'id' => [
-                    'type' => Type::nonNull(Type::string()),
-                    'description' => 'Unique product identifier',
-                ],
-                'name' => [
-                    'type' => Type::nonNull(Type::string()),
-                    'description' => 'Product name',
-                ],
-                'inStock' => [
-                    'type' => Type::nonNull(Type::boolean()),
-                    'description' => 'Availability status',
-                ],
-                'gallery' => [
-                    'type' => Type::listOf(Type::string()),
-                    'description' => 'Product image URLs',
-                ],
-                'description' => [
-                    'type' => Type::string(),
-                    'description' => 'Product description',
-                ],
-                'brand' => [
-                    'type' => Type::string(),
-                    'description' => 'Product brand',
-                ],
-                'attributes' => [
-                    'type' => Type::listOf(AttributeType::get()),
-                    'description' => 'Product attributes',
-                ],
-                'prices' => [
-                    'type' => Type::listOf(PriceType::get()),
-                    'description' => 'Product prices in different currencies',
-                ],
-                'category' => [
-                    'type' => CategoryType::get(),
-                    'description' => 'Product category',
-                ],
-            ],
-            'resolveField' => function(Product $product, array $args, $context, $info) {
-                return match($info->fieldName) {
-                    'id' => $product->getId(),
-                    'name' => $product->getName(),
-                    'inStock' => $product->isInStock(),
-                    'gallery' => $product->getGallery(),
-                    'description' => $product->getDescription(),
-                    'brand' => $product->getBrand(),
-                    'attributes' => $product->getAttributes(),
-                    'prices' => $product->getPrices(),
-                    'category' => $product->getCategory(),
-                    default => null
-                };
+            'description' => 'A product in the eCommerce store',
+            'fields' => function () {
+                return [
+                    'id' => [
+                        'type' => Type::nonNull(Type::id()),
+                        'description' => 'Unique identifier of the product',
+                    ],
+                    'name' => [
+                        'type' => Type::nonNull(Type::string()),
+                        'description' => 'Name of the product',
+                    ],
+                    'inStock' => [
+                        'type' => Type::nonNull(Type::boolean()),
+                        'description' => 'Availability status of the product',
+                    ],
+                    'gallery' => [
+                        'type' => Type::nonNull(Type::listOf(Type::string())),
+                        'description' => 'List of image URLs for the product gallery',
+                    ],
+                    'description' => [
+                        'type' => Type::nonNull(Type::string()),
+                        'description' => 'HTML description of the product',
+                    ],
+                    'category' => [
+                        'type' => Types::category(),
+                        'description' => 'Category this product belongs to',
+                    ],
+                    'attributes' => [
+                        'type' => Type::nonNull(Type::listOf(Types::attribute())),
+                        'description' => 'Product attributes and options',
+                    ],
+                    'prices' => [
+                        'type' => Type::nonNull(Type::listOf(Types::price())),
+                        'description' => 'Pricing information in different currencies',
+                    ],
+                    'brand' => [
+                        'type' => Type::nonNull(Type::string()),
+                        'description' => 'Brand name of the product',
+                    ],
+                    'productType' => [
+                        'type' => Type::nonNull(Type::string()),
+                        'description' => 'Type of product (clothing or tech)',
+                        'resolve' => function (Product $product) {
+                            return $product->getProductType();
+                        }
+                    ]
+                ];
+            },
+            'resolveField' => function (Product $product, $args, $context, $info) {
+                $method = 'get' . ucfirst($info->fieldName);
+                if (method_exists($product, $method)) {
+                    return $product->$method();
+                }
+                return $product->{$info->fieldName};
             }
         ]);
-    }
-
-    public static function get(): self
-    {
-        static $type;
-        return $type ??= new self();
     }
 }

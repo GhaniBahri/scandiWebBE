@@ -11,7 +11,8 @@ class Price
     public function __construct(
         protected float $amount,
         protected Currency $currency
-    ) {}
+    ) {
+    }
 
     public function getAmount(): float
     {

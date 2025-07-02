@@ -9,7 +9,8 @@ class Currency
     public function __construct(
         protected string $label,
         protected string $symbol
-    ) {}
+    ) {
+    }
 
     public function getLabel(): string
     {
