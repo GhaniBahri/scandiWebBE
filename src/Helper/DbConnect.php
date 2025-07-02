@@ -9,8 +9,8 @@ class DbConnect
     public static function getConnection(): \PDO
     {
         if (!self::$connection) {
-            $host = 'localhost';
-            $dbname = 'test';
+            $host = 'scandimarket.free.nf';
+            $dbname = 'scandiMarketDB';
             $username = 'root';
             $password = '';
 
